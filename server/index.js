@@ -11,8 +11,10 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => console.log('MongoDB Connection Error:', err));
 
 const patientRoutes = require('./routes/patientRoutes');
+const doctorRoutes = require('./routes/doctorRoutes');
 app.use(express.json());
 app.use('/api/patients', patientRoutes);
+app.use('/api/doctors', doctorRoutes);
 
 app.get('/', (req, res) => {
   res.send('MedAI Care Backend is running! 🚀');
