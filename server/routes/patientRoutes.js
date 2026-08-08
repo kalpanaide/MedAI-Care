@@ -23,5 +23,25 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 });
+// Login route
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
+    const patient = await Patient.findOne({ email });
+
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    if (patient.password !== password) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    res.status(200).json({ message: 'Login successful', patient });
+
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+});
 module.exports = router;
