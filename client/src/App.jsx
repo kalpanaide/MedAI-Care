@@ -5,6 +5,7 @@ import DoctorRegister from './pages/DoctorRegister';
 import BookAppointment from './pages/BookAppointment';
 import DoctorDashboard from './pages/DoctorDashboard';
 import SymptomChecker from './pages/SymptomChecker';
+import MedicineReminder from './pages/MedicineReminder';
 
 function App() {
   const [view, setView] = useState('patientLoginQuick');
@@ -86,7 +87,23 @@ function App() {
       )}
 
       {view === 'bookAppointment' && loggedInPatientId && (
-        <BookAppointment patientId={loggedInPatientId} />
+        <div>
+          <div style={{ textAlign: 'center' }}>
+            <button onClick={() => setView('bookAppointment')}>Book Appointment</button>
+            <button onClick={() => setView('medicineReminder')}>Medicine Reminders</button>
+          </div>
+          <BookAppointment patientId={loggedInPatientId} />
+        </div>
+      )}
+
+      {view === 'medicineReminder' && loggedInPatientId && (
+        <div>
+          <div style={{ textAlign: 'center' }}>
+            <button onClick={() => setView('bookAppointment')}>Book Appointment</button>
+            <button onClick={() => setView('medicineReminder')}>Medicine Reminders</button>
+          </div>
+          <MedicineReminder patientId={loggedInPatientId} />
+        </div>
       )}
 
       {view === 'symptomChecker' && <SymptomChecker />}
