@@ -9,6 +9,8 @@ import MedicineReminder from './pages/MedicineReminder';
 import HealthRecords from './pages/HealthRecords';
 import EmergencySOS from './pages/EmergencySOS';
 import MentalHealthCheckIn from './pages/MentalHealthCheckIn';
+import CreatePrescription from './pages/CreatePrescription';
+import VerifyPrescription from './pages/VerifyPrescription';
 
 function App() {
   const [view, setView] = useState('patientLoginQuick');
@@ -62,6 +64,13 @@ function App() {
     </div>
   );
 
+  const doctorTabs = (
+    <div style={{ textAlign: 'center' }}>
+      <button onClick={() => setView('doctorDashboard')}>My Appointments</button>
+      <button onClick={() => setView('createPrescription')}>Create Prescription</button>
+    </div>
+  );
+
   return (
     <div>
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
@@ -70,6 +79,7 @@ function App() {
         <button onClick={() => setView('doctorRegister')}>Doctor Register</button>
         <button onClick={() => setView('doctorLoginQuick')}>Doctor Login</button>
         <button onClick={() => setView('symptomChecker')}>AI Symptom Checker</button>
+        <button onClick={() => setView('verifyPrescription')}>Verify Prescription</button>
       </div>
 
       {view === 'patientRegister' && <Register />}
@@ -136,8 +146,20 @@ function App() {
 
       {view === 'symptomChecker' && <SymptomChecker />}
 
+      {view === 'verifyPrescription' && <VerifyPrescription />}
+
       {view === 'doctorDashboard' && loggedInDoctorId && (
-        <DoctorDashboard doctorId={loggedInDoctorId} />
+        <div>
+          {doctorTabs}
+          <DoctorDashboard doctorId={loggedInDoctorId} />
+        </div>
+      )}
+
+      {view === 'createPrescription' && loggedInDoctorId && (
+        <div>
+          {doctorTabs}
+          <CreatePrescription doctorId={loggedInDoctorId} />
+        </div>
       )}
     </div>
   );
