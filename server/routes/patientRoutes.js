@@ -46,4 +46,14 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 });
+
+// Get all patients (for doctors to browse)
+router.get('/all', async (req, res) => {
+  try {
+    const patients = await Patient.find().select('name age gender');
+    res.status(200).json(patients);
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+});
 module.exports = router;
