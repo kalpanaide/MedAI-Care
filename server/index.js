@@ -17,6 +17,7 @@ const appointmentRoutes = require('./routes/appointmentRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 const medicineRoutes = require('./routes/medicineRoutes');
 const healthRecordRoutes = require('./routes/healthRecordRoutes');
+const mentalHealthRoutes = require('./routes/mentalHealthRoutes');
 
 app.use('/api/patients', patientRoutes);
 app.use('/api/doctors', doctorRoutes);
@@ -24,6 +25,7 @@ app.use('/api/appointments', appointmentRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/medicines', medicineRoutes);
 app.use('/api/health-records', healthRecordRoutes);
+app.use('/api/mental-health', mentalHealthRoutes);
 
 app.get('/', (req, res) => {
   res.send('MedAI Care Backend is running! 🚀');

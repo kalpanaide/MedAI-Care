@@ -19,7 +19,7 @@ router.post('/symptom-check', async (req, res) => {
           content: symptoms
         }
       ],
-      model: 'llama-3.3-70b-versatile'
+      model: 'openai/gpt-oss-20b'
     });
 
     const aiResponse = completion.choices[0].message.content;
