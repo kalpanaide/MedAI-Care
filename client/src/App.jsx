@@ -8,6 +8,7 @@ import SymptomChecker from './pages/SymptomChecker';
 import MedicineReminder from './pages/MedicineReminder';
 import HealthRecords from './pages/HealthRecords';
 import EmergencySOS from './pages/EmergencySOS';
+import MentalHealthCheckIn from './pages/MentalHealthCheckIn';
 
 function App() {
   const [view, setView] = useState('patientLoginQuick');
@@ -57,6 +58,7 @@ function App() {
       <button onClick={() => setView('medicineReminder')}>Medicine Reminders</button>
       <button onClick={() => setView('healthRecords')}>Health Records</button>
       <button onClick={() => setView('emergencySOS')}>Emergency SOS</button>
+      <button onClick={() => setView('mentalHealth')}>Mental Health Check-in</button>
     </div>
   );
 
@@ -122,6 +124,13 @@ function App() {
         <div>
           {patientTabs}
           <EmergencySOS />
+        </div>
+      )}
+
+      {view === 'mentalHealth' && loggedInPatientId && (
+        <div>
+          {patientTabs}
+          <MentalHealthCheckIn />
         </div>
       )}
 
