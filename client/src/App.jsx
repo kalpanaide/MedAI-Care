@@ -11,10 +11,14 @@ import EmergencySOS from './pages/EmergencySOS';
 import MentalHealthCheckIn from './pages/MentalHealthCheckIn';
 import CreatePrescription from './pages/CreatePrescription';
 import VerifyPrescription from './pages/VerifyPrescription';
+import translations from './translations';
 
 function App() {
   const [view, setView] = useState('patientLoginQuick');
   const [message, setMessage] = useState('');
+  const [language, setLanguage] = useState('en');
+
+  const t = translations[language];
 
   const [loggedInPatientId, setLoggedInPatientId] = useState(null);
   const [loginFormData, setLoginFormData] = useState({ email: '', password: '' });
@@ -56,30 +60,38 @@ function App() {
 
   const patientTabs = (
     <div style={{ textAlign: 'center' }}>
-      <button onClick={() => setView('bookAppointment')}>Book Appointment</button>
-      <button onClick={() => setView('medicineReminder')}>Medicine Reminders</button>
-      <button onClick={() => setView('healthRecords')}>Health Records</button>
-      <button onClick={() => setView('emergencySOS')}>Emergency SOS</button>
-      <button onClick={() => setView('mentalHealth')}>Mental Health Check-in</button>
+      <button onClick={() => setView('bookAppointment')}>{t.bookAppointment}</button>
+      <button onClick={() => setView('medicineReminder')}>{t.medicineReminders}</button>
+      <button onClick={() => setView('healthRecords')}>{t.healthRecords}</button>
+      <button onClick={() => setView('emergencySOS')}>{t.emergencySOS}</button>
+      <button onClick={() => setView('mentalHealth')}>{t.mentalHealth}</button>
     </div>
   );
 
   const doctorTabs = (
     <div style={{ textAlign: 'center' }}>
-      <button onClick={() => setView('doctorDashboard')}>My Appointments</button>
-      <button onClick={() => setView('createPrescription')}>Create Prescription</button>
+      <button onClick={() => setView('doctorDashboard')}>{t.myAppointments}</button>
+      <button onClick={() => setView('createPrescription')}>{t.createPrescription}</button>
     </div>
   );
 
   return (
     <div>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <button onClick={() => setView('patientRegister')}>Patient Register</button>
-        <button onClick={() => setView('patientLoginQuick')}>Patient Login</button>
-        <button onClick={() => setView('doctorRegister')}>Doctor Register</button>
-        <button onClick={() => setView('doctorLoginQuick')}>Doctor Login</button>
-        <button onClick={() => setView('symptomChecker')}>AI Symptom Checker</button>
-        <button onClick={() => setView('verifyPrescription')}>Verify Prescription</button>
+      <div style={{ textAlign: 'center', marginTop: '10px' }}>
+        <button onClick={() => setLanguage('en')} style={{ fontWeight: language === 'en' ? 'bold' : 'normal' }}>English</button>
+        {' | '}
+        <button onClick={() => setLanguage('hi')} style={{ fontWeight: language === 'hi' ? 'bold' : 'normal' }}>हिंदी</button>
+      </div>
+
+      <h1 style={{ textAlign: 'center' }}>{t.welcome}</h1>
+
+      <div style={{ textAlign: 'center', marginTop: '10px' }}>
+        <button onClick={() => setView('patientRegister')}>{t.patientRegister}</button>
+        <button onClick={() => setView('patientLoginQuick')}>{t.patientLogin}</button>
+        <button onClick={() => setView('doctorRegister')}>{t.doctorRegister}</button>
+        <button onClick={() => setView('doctorLoginQuick')}>{t.doctorLogin}</button>
+        <button onClick={() => setView('symptomChecker')}>{t.symptomChecker}</button>
+        <button onClick={() => setView('verifyPrescription')}>{t.verifyPrescription}</button>
       </div>
 
       {view === 'patientRegister' && <Register />}
@@ -87,11 +99,11 @@ function App() {
 
       {view === 'patientLoginQuick' && (
         <div style={{ maxWidth: '400px', margin: '50px auto' }}>
-          <h2>Patient Login</h2>
+          <h2>{t.patientLogin}</h2>
           <form onSubmit={handlePatientLogin}>
-            <input type="email" name="email" placeholder="Email" onChange={handleLoginChange} required /><br /><br />
-            <input type="password" name="password" placeholder="Password" onChange={handleLoginChange} required /><br /><br />
-            <button type="submit">Login</button>
+            <input type="email" name="email" placeholder={t.email} onChange={handleLoginChange} required /><br /><br />
+            <input type="password" name="password" placeholder={t.password} onChange={handleLoginChange} required /><br /><br />
+            <button type="submit">{t.login}</button>
           </form>
           {message && <p>{message}</p>}
         </div>
@@ -99,11 +111,11 @@ function App() {
 
       {view === 'doctorLoginQuick' && (
         <div style={{ maxWidth: '400px', margin: '50px auto' }}>
-          <h2>Doctor Login</h2>
+          <h2>{t.doctorLogin}</h2>
           <form onSubmit={handleDoctorLogin}>
-            <input type="email" name="email" placeholder="Email" onChange={handleDoctorLoginChange} required /><br /><br />
-            <input type="password" name="password" placeholder="Password" onChange={handleDoctorLoginChange} required /><br /><br />
-            <button type="submit">Login</button>
+            <input type="email" name="email" placeholder={t.email} onChange={handleDoctorLoginChange} required /><br /><br />
+            <input type="password" name="password" placeholder={t.password} onChange={handleDoctorLoginChange} required /><br /><br />
+            <button type="submit">{t.login}</button>
           </form>
           {message && <p>{message}</p>}
         </div>
