@@ -5,7 +5,7 @@ function DoctorDashboard({ doctorId }) {
   const [appointments, setAppointments] = useState([]);
 
   const fetchAppointments = () => {
-    axios.get(`http://localhost:5000/api/appointments/doctor/${doctorId}`)
+    axios.get(`https://medai-care-backend.onrender.com/api/appointments/doctor/${doctorId}`)
       .then((response) => setAppointments(response.data))
       .catch((error) => console.log(error));
   };
@@ -16,7 +16,7 @@ function DoctorDashboard({ doctorId }) {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/appointments/${id}/status`, { status: newStatus });
+      await axios.put(`https://medai-care-backend.onrender.com/api/appointments/${id}/status`, { status: newStatus });
       fetchAppointments();
     } catch (error) {
       console.log(error);

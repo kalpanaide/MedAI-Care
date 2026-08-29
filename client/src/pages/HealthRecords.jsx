@@ -9,7 +9,7 @@ function HealthRecords({ patientId }) {
   const [uploading, setUploading] = useState(false);
 
   const fetchRecords = () => {
-    axios.get(`http://localhost:5000/api/health-records/patient/${patientId}`)
+    axios.get(`https://medai-care-backend.onrender.com/api/health-records/patient/${patientId}`)
       .then((response) => setRecords(response.data))
       .catch((error) => console.log(error));
   };
@@ -38,7 +38,7 @@ function HealthRecords({ patientId }) {
     formData.append('file', file);
 
     try {
-      await axios.post('http://localhost:5000/api/health-records/upload', formData, {
+      await axios.post('https://medai-care-backend.onrender.com/api/health-records/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setMessage('Record uploaded successfully!');
@@ -54,7 +54,7 @@ function HealthRecords({ patientId }) {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/health-records/${id}`);
+      await axios.delete(`https://medai-care-backend.onrender.com/api/health-records/${id}`);
       fetchRecords();
     } catch (error) {
       console.log(error);

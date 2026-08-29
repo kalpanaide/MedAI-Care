@@ -5,7 +5,7 @@ function MyAppointments({ patientId }) {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/appointments/patient/${patientId}`)
+    axios.get(`https://medai-care-backend.onrender.com/api/appointments/patient/${patientId}`)
       .then((response) => setAppointments(response.data))
       .catch((error) => console.log(error));
   }, [patientId]);

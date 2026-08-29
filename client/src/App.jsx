@@ -39,7 +39,7 @@ function App() {
   const handlePatientLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/patients/login', loginFormData);
+      const response = await axios.post('https://medai-care-backend.onrender.com/api/patients/login', loginFormData);
       setLoggedInPatientId(response.data.patient._id);
       setLoggedInPatientName(response.data.patient.name);
       setMessage('Login successful!');
@@ -56,7 +56,7 @@ function App() {
   const handleDoctorLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/doctors/login', doctorLoginFormData);
+      const response = await axios.post('https://medai-care-backend.onrender.com/api/doctors/login', doctorLoginFormData);
       setLoggedInDoctorId(response.data.doctor._id);
       setLoggedInDoctorName(response.data.doctor.name);
       setMessage('Login successful!');

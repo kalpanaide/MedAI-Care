@@ -28,7 +28,7 @@ function SymptomChecker({ language = 'en' }) {
     setResult(null);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/ai/symptom-check', { symptoms });
+      const response = await axios.post('https://medai-care-backend.onrender.com/api/ai/symptom-check', { symptoms });
       setResult(response.data.result);
     } catch (error) {
       setResult({ cause: 'Something went wrong. Please try again.', severity: 'Medium', advice: '' });

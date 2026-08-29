@@ -23,7 +23,7 @@ function Register({ language = 'en' }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/patients/register', formData);
+      const response = await axios.post('https://medai-care-backend.onrender.com/api/patients/register', formData);
       setMessage('Registration successful!');
       console.log(response.data);
     } catch (error) {

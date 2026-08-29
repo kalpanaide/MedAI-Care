@@ -12,7 +12,7 @@ function BookAppointment({ patientId }) {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/doctors/all')
+    axios.get('https://medai-care-backend.onrender.com/api/doctors/all')
       .then((response) => setDoctors(response.data))
       .catch((error) => console.log(error));
   }, []);
@@ -24,7 +24,7 @@ function BookAppointment({ patientId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/appointments/book', {
+      const response = await axios.post('https://medai-care-backend.onrender.com/api/appointments/book', {
         patient: patientId,
         doctor: formData.doctor,
         date: formData.date,

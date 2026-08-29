@@ -25,7 +25,7 @@ function MentalHealthCheckIn() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/mental-health/checkin', { message: userMessage });
+      const response = await axios.post('https://medai-care-backend.onrender.com/api/mental-health/checkin', { message: userMessage });
       setChatHistory((prev) => [...prev, { sender: 'ai', text: response.data.result }]);
       speak(response.data.result);
     } catch (error) {

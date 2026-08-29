@@ -16,7 +16,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/patients/login', formData);
+      const response = await axios.post('https://medai-care-backend.onrender.com/api/patients/login', formData);
       setMessage('Login successful! Welcome ' + response.data.patient.name);
       console.log(response.data);
     } catch (error) {

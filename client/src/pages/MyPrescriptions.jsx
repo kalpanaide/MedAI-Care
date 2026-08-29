@@ -5,7 +5,7 @@ function MyPrescriptions({ patientId }) {
   const [prescriptions, setPrescriptions] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/prescriptions/patient/${patientId}`)
+    axios.get(`https://medai-care-backend.onrender.com/api/prescriptions/patient/${patientId}`)
       .then((response) => setPrescriptions(response.data))
       .catch((error) => console.log(error));
   }, [patientId]);

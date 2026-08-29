@@ -13,7 +13,7 @@ function CreatePrescription({ doctorId }) {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/patients/all')
+    axios.get('https://medai-care-backend.onrender.com/api/patients/all')
       .then((response) => setPatients(response.data))
       .catch((error) => console.log(error));
   }, []);
@@ -25,7 +25,7 @@ function CreatePrescription({ doctorId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/prescriptions/create', {
+      const response = await axios.post('https://medai-care-backend.onrender.com/api/prescriptions/create', {
         patient: formData.patient,
         doctor: doctorId,
         medicines: formData.medicines,

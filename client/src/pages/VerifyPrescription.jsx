@@ -13,7 +13,7 @@ function VerifyPrescription({ language = 'en' }) {
     setError('');
     setResult(null);
     try {
-      const response = await axios.get(`http://localhost:5000/api/prescriptions/verify/${prescriptionId}`);
+      const response = await axios.get(`https://medai-care-backend.onrender.com/api/prescriptions/verify/${prescriptionId}`);
       setResult(response.data.prescription);
     } catch (error) {
       setError(t.notFoundError);

@@ -15,7 +15,7 @@ function MedicineReminder({ patientId }) {
   const cacheKey = `medicines_${patientId}`;
 
   const fetchMedicines = () => {
-    axios.get(`http://localhost:5000/api/medicines/patient/${patientId}`)
+    axios.get(`https://medai-care-backend.onrender.com/api/medicines/patient/${patientId}`)
       .then((response) => {
         setMedicines(response.data);
         setIsOffline(false);
@@ -42,7 +42,7 @@ function MedicineReminder({ patientId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/medicines/add', {
+      await axios.post('https://medai-care-backend.onrender.com/api/medicines/add', {
         patient: patientId,
         ...formData
       });
@@ -57,7 +57,7 @@ function MedicineReminder({ patientId }) {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/medicines/${id}`);
+      await axios.delete(`https://medai-care-backend.onrender.com/api/medicines/${id}`);
       fetchMedicines();
     } catch (error) {
       console.log(error);

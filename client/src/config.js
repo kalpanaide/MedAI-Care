@@ -1,0 +1,1 @@
+export const API_URL = 'https://medai-care-backend.onrender.com';
