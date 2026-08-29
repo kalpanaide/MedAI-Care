@@ -30,23 +30,24 @@ function Register() {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto' }}>
+    <div className="card">
       <h2>Patient Registration</h2>
+      <p className="card-subtitle">Create your account to get started</p>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Full Name" onChange={handleChange} required /><br /><br />
-        <input type="number" name="age" placeholder="Age" onChange={handleChange} required /><br /><br />
-        <select name="gender" onChange={handleChange} required>
+        <input className="form-input" type="text" name="name" placeholder="Full Name" onChange={handleChange} required />
+        <input className="form-input" type="number" name="age" placeholder="Age" onChange={handleChange} required />
+        <select className="form-input" name="gender" onChange={handleChange} required>
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Other">Other</option>
-        </select><br /><br />
-        <input type="text" name="phone" placeholder="Phone Number" onChange={handleChange} required /><br /><br />
-        <input type="email" name="email" placeholder="Email" onChange={handleChange} required /><br /><br />
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} required /><br /><br />
-        <button type="submit">Register</button>
+        </select>
+        <input className="form-input" type="text" name="phone" placeholder="Phone Number" onChange={handleChange} required />
+        <input className="form-input" type="email" name="email" placeholder="Email" onChange={handleChange} required />
+        <input className="form-input" type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        <button className="btn-primary" type="submit">Register</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className="status-message">{message}</p>}
     </div>
   );
 }

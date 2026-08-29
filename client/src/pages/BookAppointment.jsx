@@ -40,23 +40,24 @@ function BookAppointment({ patientId }) {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto' }}>
+    <div className="card">
       <h2>Book Appointment</h2>
+      <p className="card-subtitle">Choose a doctor and pick a time that works for you</p>
       <form onSubmit={handleSubmit}>
-        <select name="doctor" onChange={handleChange} required>
+        <select className="form-input" name="doctor" onChange={handleChange} required>
           <option value="">Select Doctor</option>
           {doctors.map((doc) => (
             <option key={doc._id} value={doc._id}>
               Dr. {doc.name} - {doc.specialization}
             </option>
           ))}
-        </select><br /><br />
-        <input type="date" name="date" onChange={handleChange} required /><br /><br />
-        <input type="time" name="time" onChange={handleChange} required /><br /><br />
-        <textarea name="reason" placeholder="Reason for visit" onChange={handleChange} required /><br /><br />
-        <button type="submit">Book Appointment</button>
+        </select>
+        <input className="form-input" type="date" name="date" onChange={handleChange} required />
+        <input className="form-input" type="time" name="time" onChange={handleChange} required />
+        <textarea className="form-input" name="reason" placeholder="Reason for visit" onChange={handleChange} required />
+        <button className="btn-primary" type="submit">Book Appointment</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className="status-message">{message}</p>}
     </div>
   );
 }

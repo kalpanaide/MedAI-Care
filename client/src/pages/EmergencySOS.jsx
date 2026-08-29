@@ -32,26 +32,30 @@ function EmergencySOS() {
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: '50px auto', textAlign: 'center' }}>
+    <div className="card" style={{ textAlign: 'center', maxWidth: '520px' }}>
       <h2>Emergency SOS</h2>
+      <p className="card-subtitle">Find nearby hospitals in one tap</p>
+
       <button
+        className="btn-danger"
         onClick={handleSOS}
         disabled={loading}
-        style={{ backgroundColor: 'red', color: 'white', padding: '15px 30px', fontSize: '18px', border: 'none', borderRadius: '8px' }}
       >
         {loading ? 'Getting Location...' : 'SOS - Find Nearby Hospitals'}
       </button>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="status-message" style={{ color: 'var(--color-accent)' }}>{error}</p>}
 
       {location && (
         <div style={{ marginTop: '20px' }}>
-          <p>Your Location: {location.lat}, {location.lng}</p>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '14px' }}>
+            Your Location: {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
+          </p>
           <iframe
             title="hospital-map"
             width="100%"
-            height="400"
-            style={{ border: 0 }}
+            height="380"
+            style={{ border: 0, borderRadius: 'var(--radius)' }}
             src={`https://maps.google.com/maps?q=hospitals+near+${location.lat},${location.lng}&z=14&output=embed`}
           ></iframe>
         </div>

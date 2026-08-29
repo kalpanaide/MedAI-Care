@@ -11,16 +11,26 @@ function DoctorDashboard({ doctorId }) {
   }, [doctorId]);
 
   return (
-    <div style={{ maxWidth: '600px', margin: '50px auto' }}>
+    <div className="card" style={{ maxWidth: '600px' }}>
       <h2>My Appointments</h2>
-      {appointments.length === 0 && <p>No appointments yet.</p>}
+      <p className="card-subtitle">Here's who you're seeing</p>
+
+      {appointments.length === 0 && <p className="empty-state">No appointments yet.</p>}
       {appointments.map((appt) => (
-        <div key={appt._id} style={{ border: '1px solid gray', padding: '10px', marginBottom: '10px' }}>
-          <p><strong>Patient:</strong> {appt.patient.name} ({appt.patient.age} yrs, {appt.patient.gender})</p>
-          <p><strong>Phone:</strong> {appt.patient.phone}</p>
-          <p><strong>Date:</strong> {appt.date} at {appt.time}</p>
-          <p><strong>Reason:</strong> {appt.reason}</p>
-          <p><strong>Status:</strong> {appt.status}</p>
+        <div key={appt._id} className="list-item">
+          <h4>{appt.patient.name} ({appt.patient.age} yrs, {appt.patient.gender})</h4>
+          <p style={{ margin: '0 0 4px 0', fontSize: '14px', color: 'var(--color-text-muted)' }}>
+            Phone: {appt.patient.phone}
+          </p>
+          <p style={{ margin: '0 0 4px 0', fontSize: '14px' }}>
+            {appt.date} at {appt.time}
+          </p>
+          <p style={{ margin: '0 0 4px 0', fontSize: '14px' }}>
+            Reason: {appt.reason}
+          </p>
+          <p style={{ margin: 0, fontSize: '13px', color: 'var(--color-primary)', fontWeight: '600' }}>
+            {appt.status}
+          </p>
         </div>
       ))}
     </div>

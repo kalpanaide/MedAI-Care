@@ -25,30 +25,39 @@ function MentalHealthCheckIn() {
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: '50px auto' }}>
+    <div className="card" style={{ maxWidth: '520px' }}>
       <h2>Mental Health Check-in</h2>
-      <p style={{ fontSize: '14px', color: 'gray' }}>Share how you're feeling. This is a supportive space, not a replacement for professional help.</p>
+      <p className="card-subtitle">Share how you're feeling. This is a supportive space, not a replacement for professional help.</p>
 
-      <div style={{ border: '1px solid gray', minHeight: '250px', padding: '10px', marginBottom: '10px', whiteSpace: 'pre-line' }}>
-        {chatHistory.length === 0 && <p style={{ color: 'gray' }}>Start by sharing how you're feeling today...</p>}
+      <div style={{
+        border: '1px solid var(--color-border)',
+        borderRadius: 'var(--radius)',
+        minHeight: '250px',
+        padding: '16px',
+        marginBottom: '14px',
+        whiteSpace: 'pre-line',
+        backgroundColor: 'var(--color-bg)'
+      }}>
+        {chatHistory.length === 0 && <p className="empty-state">Start by sharing how you're feeling today...</p>}
         {chatHistory.map((chat, index) => (
-          <div key={index} style={{ marginBottom: '15px', textAlign: chat.sender === 'user' ? 'right' : 'left' }}>
-            <strong>{chat.sender === 'user' ? 'You' : 'MedAI Care'}:</strong>
-            <p>{chat.text}</p>
+          <div key={index} style={{ marginBottom: '16px', textAlign: chat.sender === 'user' ? 'right' : 'left' }}>
+            <strong style={{ color: chat.sender === 'user' ? 'var(--color-text)' : 'var(--color-primary)', fontSize: '13px' }}>
+              {chat.sender === 'user' ? 'You' : 'MedAI Care'}
+            </strong>
+            <p style={{ margin: '4px 0 0 0' }}>{chat.text}</p>
           </div>
         ))}
-        {loading && <p style={{ color: 'gray' }}>Thinking...</p>}
+        {loading && <p className="empty-state">Thinking...</p>}
       </div>
 
       <textarea
+        className="form-input"
         rows="3"
-        style={{ width: '100%' }}
         placeholder="How are you feeling today?"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <br /><br />
-      <button onClick={handleSend} disabled={loading}>
+      <button className="btn-primary" onClick={handleSend} disabled={loading}>
         {loading ? 'Sending...' : 'Send'}
       </button>
     </div>

@@ -12,6 +12,7 @@ import MentalHealthCheckIn from './pages/MentalHealthCheckIn';
 import CreatePrescription from './pages/CreatePrescription';
 import VerifyPrescription from './pages/VerifyPrescription';
 import translations from './translations';
+import './App.css';
 
 function App() {
   const [view, setView] = useState('patientLoginQuick');
@@ -59,65 +60,66 @@ function App() {
   };
 
   const patientTabs = (
-    <div style={{ textAlign: 'center' }}>
-      <button onClick={() => setView('bookAppointment')}>{t.bookAppointment}</button>
-      <button onClick={() => setView('medicineReminder')}>{t.medicineReminders}</button>
-      <button onClick={() => setView('healthRecords')}>{t.healthRecords}</button>
-      <button onClick={() => setView('emergencySOS')}>{t.emergencySOS}</button>
-      <button onClick={() => setView('mentalHealth')}>{t.mentalHealth}</button>
+    <div className="sub-nav">
+      <button className="nav-btn" onClick={() => setView('bookAppointment')}>{t.bookAppointment}</button>
+      <button className="nav-btn" onClick={() => setView('medicineReminder')}>{t.medicineReminders}</button>
+      <button className="nav-btn" onClick={() => setView('healthRecords')}>{t.healthRecords}</button>
+      <button className="nav-btn" onClick={() => setView('emergencySOS')}>{t.emergencySOS}</button>
+      <button className="nav-btn" onClick={() => setView('mentalHealth')}>{t.mentalHealth}</button>
     </div>
   );
 
   const doctorTabs = (
-    <div style={{ textAlign: 'center' }}>
-      <button onClick={() => setView('doctorDashboard')}>{t.myAppointments}</button>
-      <button onClick={() => setView('createPrescription')}>{t.createPrescription}</button>
+    <div className="sub-nav">
+      <button className="nav-btn" onClick={() => setView('doctorDashboard')}>{t.myAppointments}</button>
+      <button className="nav-btn" onClick={() => setView('createPrescription')}>{t.createPrescription}</button>
     </div>
   );
 
   return (
     <div>
-      <div style={{ textAlign: 'center', marginTop: '10px' }}>
-        <button onClick={() => setLanguage('en')} style={{ fontWeight: language === 'en' ? 'bold' : 'normal' }}>English</button>
-        {' | '}
-        <button onClick={() => setLanguage('hi')} style={{ fontWeight: language === 'hi' ? 'bold' : 'normal' }}>हिंदी</button>
-      </div>
+      <div className="app-header">
+        <div className="lang-toggle">
+          <button className={language === 'en' ? 'active' : ''} onClick={() => setLanguage('en')}>English</button>
+          <button className={language === 'hi' ? 'active' : ''} onClick={() => setLanguage('hi')}>हिंदी</button>
+        </div>
 
-      <h1 style={{ textAlign: 'center' }}>{t.welcome}</h1>
+        <div className="app-title">{t.welcome}</div>
 
-      <div style={{ textAlign: 'center', marginTop: '10px' }}>
-        <button onClick={() => setView('patientRegister')}>{t.patientRegister}</button>
-        <button onClick={() => setView('patientLoginQuick')}>{t.patientLogin}</button>
-        <button onClick={() => setView('doctorRegister')}>{t.doctorRegister}</button>
-        <button onClick={() => setView('doctorLoginQuick')}>{t.doctorLogin}</button>
-        <button onClick={() => setView('symptomChecker')}>{t.symptomChecker}</button>
-        <button onClick={() => setView('verifyPrescription')}>{t.verifyPrescription}</button>
+        <div className="nav-bar">
+          <button className="nav-btn" onClick={() => setView('patientRegister')}>{t.patientRegister}</button>
+          <button className="nav-btn" onClick={() => setView('patientLoginQuick')}>{t.patientLogin}</button>
+          <button className="nav-btn" onClick={() => setView('doctorRegister')}>{t.doctorRegister}</button>
+          <button className="nav-btn" onClick={() => setView('doctorLoginQuick')}>{t.doctorLogin}</button>
+          <button className="nav-btn" onClick={() => setView('symptomChecker')}>{t.symptomChecker}</button>
+          <button className="nav-btn" onClick={() => setView('verifyPrescription')}>{t.verifyPrescription}</button>
+        </div>
       </div>
 
       {view === 'patientRegister' && <Register />}
       {view === 'doctorRegister' && <DoctorRegister />}
 
       {view === 'patientLoginQuick' && (
-        <div style={{ maxWidth: '400px', margin: '50px auto' }}>
+        <div className="card">
           <h2>{t.patientLogin}</h2>
           <form onSubmit={handlePatientLogin}>
-            <input type="email" name="email" placeholder={t.email} onChange={handleLoginChange} required /><br /><br />
-            <input type="password" name="password" placeholder={t.password} onChange={handleLoginChange} required /><br /><br />
-            <button type="submit">{t.login}</button>
+            <input className="form-input" type="email" name="email" placeholder={t.email} onChange={handleLoginChange} required />
+            <input className="form-input" type="password" name="password" placeholder={t.password} onChange={handleLoginChange} required />
+            <button className="btn-primary" type="submit">{t.login}</button>
           </form>
-          {message && <p>{message}</p>}
+          {message && <p className="status-message">{message}</p>}
         </div>
       )}
 
       {view === 'doctorLoginQuick' && (
-        <div style={{ maxWidth: '400px', margin: '50px auto' }}>
+        <div className="card">
           <h2>{t.doctorLogin}</h2>
           <form onSubmit={handleDoctorLogin}>
-            <input type="email" name="email" placeholder={t.email} onChange={handleDoctorLoginChange} required /><br /><br />
-            <input type="password" name="password" placeholder={t.password} onChange={handleDoctorLoginChange} required /><br /><br />
-            <button type="submit">{t.login}</button>
+            <input className="form-input" type="email" name="email" placeholder={t.email} onChange={handleDoctorLoginChange} required />
+            <input className="form-input" type="password" name="password" placeholder={t.password} onChange={handleDoctorLoginChange} required />
+            <button className="btn-primary" type="submit">{t.login}</button>
           </form>
-          {message && <p>{message}</p>}
+          {message && <p className="status-message">{message}</p>}
         </div>
       )}
 

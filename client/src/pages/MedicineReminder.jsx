@@ -51,51 +51,57 @@ function MedicineReminder({ patientId }) {
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: '50px auto' }}>
+    <div className="card">
       <h2>Medicine Reminders</h2>
+      <p className="card-subtitle">Never miss a dose</p>
 
       <form onSubmit={handleSubmit}>
         <input
+          className="form-input"
           type="text"
           name="medicineName"
           placeholder="Medicine Name"
           value={formData.medicineName}
           onChange={handleChange}
           required
-        /><br /><br />
+        />
         <input
+          className="form-input"
           type="text"
           name="dosage"
           placeholder="Dosage (e.g. 1 tablet)"
           value={formData.dosage}
           onChange={handleChange}
           required
-        /><br /><br />
+        />
         <input
+          className="form-input"
           type="time"
           name="time"
           value={formData.time}
           onChange={handleChange}
           required
-        /><br /><br />
-        <select name="frequency" value={formData.frequency} onChange={handleChange}>
+        />
+        <select className="form-input" name="frequency" value={formData.frequency} onChange={handleChange}>
           <option value="Once a day">Once a day</option>
           <option value="Twice a day">Twice a day</option>
           <option value="Thrice a day">Thrice a day</option>
           <option value="As needed">As needed</option>
-        </select><br /><br />
-        <button type="submit">Add Reminder</button>
+        </select>
+        <button className="btn-primary" type="submit">Add Reminder</button>
       </form>
 
-      {message && <p>{message}</p>}
+      {message && <p className="status-message">{message}</p>}
 
-      <h3>My Medicines</h3>
-      {medicines.length === 0 && <p>No reminders added yet.</p>}
+      <h3 style={{ marginTop: '28px', marginBottom: '12px' }}>My Medicines</h3>
+      {medicines.length === 0 && <p className="empty-state">No reminders added yet.</p>}
       {medicines.map((med) => (
-        <div key={med._id} style={{ border: '1px solid gray', padding: '10px', marginBottom: '10px' }}>
-          <p><strong>{med.medicineName}</strong> - {med.dosage}</p>
-          <p>Time: {med.time} | {med.frequency}</p>
-          <button onClick={() => handleDelete(med._id)}>Delete</button>
+        <div key={med._id} className="list-item">
+          <h4>{med.medicineName} - {med.dosage}</h4>
+          <p style={{ margin: '0 0 8px 0', color: 'var(--color-text-muted)', fontSize: '14px' }}>
+            {med.time} | {med.frequency}
+          </p>
+          <button className="btn-delete" onClick={() => handleDelete(med._id)}>Delete</button>
         </div>
       ))}
     </div>

@@ -62,33 +62,37 @@ function HealthRecords({ patientId }) {
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: '50px auto' }}>
+    <div className="card">
       <h2>Digital Health Records</h2>
+      <p className="card-subtitle">Keep all your medical reports in one place</p>
 
       <form onSubmit={handleUpload}>
         <input
+          className="form-input"
           type="text"
           placeholder="Record Title (e.g. Blood Test Report)"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
-        /><br /><br />
-        <input type="file" onChange={handleFileChange} required /><br /><br />
-        <button type="submit" disabled={uploading}>
+        />
+        <input className="form-input" type="file" onChange={handleFileChange} required />
+        <button className="btn-primary" type="submit" disabled={uploading}>
           {uploading ? 'Uploading...' : 'Upload Record'}
         </button>
       </form>
 
-      {message && <p>{message}</p>}
+      {message && <p className="status-message">{message}</p>}
 
-      <h3>My Records</h3>
-      {records.length === 0 && <p>No records uploaded yet.</p>}
+      <h3 style={{ marginTop: '28px', marginBottom: '12px' }}>My Records</h3>
+      {records.length === 0 && <p className="empty-state">No records uploaded yet.</p>}
       {records.map((rec) => (
-        <div key={rec._id} style={{ border: '1px solid gray', padding: '10px', marginBottom: '10px' }}>
-          <p><strong>{rec.title}</strong></p>
-          <a href={rec.fileUrl} target="_blank" rel="noopener noreferrer">View File</a>
+        <div key={rec._id} className="list-item">
+          <h4>{rec.title}</h4>
+          <a href={rec.fileUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-primary)', fontSize: '14px' }}>
+            View File
+          </a>
           <br /><br />
-          <button onClick={() => handleDelete(rec._id)}>Delete</button>
+          <button className="btn-delete" onClick={() => handleDelete(rec._id)}>Delete</button>
         </div>
       ))}
     </div>

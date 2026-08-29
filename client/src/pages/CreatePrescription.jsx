@@ -39,35 +39,40 @@ function CreatePrescription({ doctorId }) {
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: '50px auto' }}>
+    <div className="card">
       <h2>Create Prescription</h2>
+      <p className="card-subtitle">Generate a verifiable prescription with QR code</p>
       <form onSubmit={handleSubmit}>
-        <select name="patient" onChange={handleChange} required>
+        <select className="form-input" name="patient" onChange={handleChange} required>
           <option value="">Select Patient</option>
           {patients.map((p) => (
             <option key={p._id} value={p._id}>{p.name} ({p.age} yrs)</option>
           ))}
-        </select><br /><br />
+        </select>
         <textarea
+          className="form-input"
           name="medicines"
           placeholder="Medicines (e.g. Paracetamol 500mg - Twice daily for 5 days)"
           onChange={handleChange}
           required
-        /><br /><br />
+        />
         <textarea
+          className="form-input"
           name="notes"
           placeholder="Notes (optional)"
           onChange={handleChange}
-        /><br /><br />
-        <button type="submit">Create Prescription</button>
+        />
+        <button className="btn-primary" type="submit">Create Prescription</button>
       </form>
 
-      {message && <p>{message}</p>}
+      {message && <p className="status-message">{message}</p>}
 
       {qrCode && (
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <p><strong>Scan this QR code to verify:</strong></p>
-          <img src={qrCode} alt="Prescription QR Code" />
+        <div style={{ marginTop: '24px', textAlign: 'center' }}>
+          <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', marginBottom: '10px' }}>
+            Scan this QR code to verify:
+          </p>
+          <img src={qrCode} alt="Prescription QR Code" style={{ borderRadius: 'var(--radius)' }} />
         </div>
       )}
     </div>

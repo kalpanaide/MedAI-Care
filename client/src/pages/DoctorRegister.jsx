@@ -30,18 +30,19 @@ function DoctorRegister() {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto' }}>
+    <div className="card">
       <h2>Doctor Registration</h2>
+      <p className="card-subtitle">Join MedAI Care as a healthcare provider</p>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Full Name" onChange={handleChange} required /><br /><br />
-        <input type="text" name="specialization" placeholder="Specialization" onChange={handleChange} required /><br /><br />
-        <input type="number" name="experience" placeholder="Years of Experience" onChange={handleChange} required /><br /><br />
-        <input type="text" name="phone" placeholder="Phone Number" onChange={handleChange} required /><br /><br />
-        <input type="email" name="email" placeholder="Email" onChange={handleChange} required /><br /><br />
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} required /><br /><br />
-        <button type="submit">Register</button>
+        <input className="form-input" type="text" name="name" placeholder="Full Name" onChange={handleChange} required />
+        <input className="form-input" type="text" name="specialization" placeholder="Specialization" onChange={handleChange} required />
+        <input className="form-input" type="number" name="experience" placeholder="Years of Experience" onChange={handleChange} required />
+        <input className="form-input" type="text" name="phone" placeholder="Phone Number" onChange={handleChange} required />
+        <input className="form-input" type="email" name="email" placeholder="Email" onChange={handleChange} required />
+        <input className="form-input" type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        <button className="btn-primary" type="submit">Register</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className="status-message">{message}</p>}
     </div>
   );
 }
