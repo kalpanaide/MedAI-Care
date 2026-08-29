@@ -49,4 +49,19 @@ router.get('/doctor/:doctorId', async (req, res) => {
   }
 });
 
+// Update appointment status
+router.put('/:id/status', async (req, res) => {
+  try {
+    const { status } = req.body;
+    const updated = await Appointment.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+    res.status(200).json({ message: 'Status updated', appointment: updated });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+});
+
 module.exports = router;

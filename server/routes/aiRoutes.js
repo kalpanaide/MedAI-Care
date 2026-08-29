@@ -12,7 +12,7 @@ router.post('/symptom-check', async (req, res) => {
       messages: [
         {
           role: 'system',
-          content: 'You are a medical assistant AI. Based on symptoms given, suggest possible causes, severity level (Low/Medium/High), and whether the person should see a doctor. Keep the response short and clear. Always add a disclaimer that this is not a substitute for professional medical advice.'
+          content: 'You are a medical assistant AI. Based on the symptoms given, respond with ONLY a valid JSON object, no markdown, no extra text, in this exact format: {"cause": "short possible cause, under 15 words", "severity": "Low" or "Medium" or "High", "advice": "short practical advice, under 20 words"}'
         },
         {
           role: 'user',
@@ -22,8 +22,17 @@ router.post('/symptom-check', async (req, res) => {
       model: 'openai/gpt-oss-20b'
     });
 
-    const aiResponse = completion.choices[0].message.content;
-    res.status(200).json({ result: aiResponse });
+    const rawText = completion.choices[0].message.content;
+    let parsed;
+
+    try {
+      const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+      parsed = JSON.parse(jsonMatch ? jsonMatch[0] : rawText);
+    } catch (parseError) {
+      parsed = { cause: rawText, severity: 'Medium', advice: 'Please consult a doctor for accurate guidance.' };
+    }
+
+    res.status(200).json({ result: parsed });
 
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error: error.message });

@@ -4,11 +4,31 @@ import axios from 'axios';
 function DoctorDashboard({ doctorId }) {
   const [appointments, setAppointments] = useState([]);
 
-  useEffect(() => {
+  const fetchAppointments = () => {
     axios.get(`http://localhost:5000/api/appointments/doctor/${doctorId}`)
       .then((response) => setAppointments(response.data))
       .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    fetchAppointments();
   }, [doctorId]);
+
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await axios.put(`http://localhost:5000/api/appointments/${id}/status`, { status: newStatus });
+      fetchAppointments();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const statusColor = (status) => {
+    if (status === 'Confirmed') return 'var(--color-success)';
+    if (status === 'Cancelled') return 'var(--color-accent)';
+    if (status === 'Completed') return 'var(--color-primary)';
+    return 'var(--color-text-muted)';
+  };
 
   return (
     <div className="card" style={{ maxWidth: '600px' }}>
@@ -25,12 +45,20 @@ function DoctorDashboard({ doctorId }) {
           <p style={{ margin: '0 0 4px 0', fontSize: '14px' }}>
             {appt.date} at {appt.time}
           </p>
-          <p style={{ margin: '0 0 4px 0', fontSize: '14px' }}>
+          <p style={{ margin: '0 0 10px 0', fontSize: '14px' }}>
             Reason: {appt.reason}
           </p>
-          <p style={{ margin: 0, fontSize: '13px', color: 'var(--color-primary)', fontWeight: '600' }}>
-            {appt.status}
-          </p>
+          <select
+            className="form-input"
+            style={{ marginBottom: 0, width: 'auto', fontSize: '13px', padding: '6px 10px', color: statusColor(appt.status), fontWeight: '600' }}
+            value={appt.status}
+            onChange={(e) => handleStatusChange(appt._id, e.target.value)}
+          >
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
         </div>
       ))}
     </div>

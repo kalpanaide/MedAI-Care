@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
+import translations from '../translations';
 
-function DoctorRegister() {
+function DoctorRegister({ language = 'en' }) {
+  const t = translations[language];
+
   const [formData, setFormData] = useState({
     name: '',
     specialization: '',
@@ -31,16 +34,16 @@ function DoctorRegister() {
 
   return (
     <div className="card">
-      <h2>Doctor Registration</h2>
-      <p className="card-subtitle">Join MedAI Care as a healthcare provider</p>
+      <h2>{t.regDoctorTitle}</h2>
+      <p className="card-subtitle">{t.regDoctorSubtitle}</p>
       <form onSubmit={handleSubmit}>
-        <input className="form-input" type="text" name="name" placeholder="Full Name" onChange={handleChange} required />
-        <input className="form-input" type="text" name="specialization" placeholder="Specialization" onChange={handleChange} required />
-        <input className="form-input" type="number" name="experience" placeholder="Years of Experience" onChange={handleChange} required />
-        <input className="form-input" type="text" name="phone" placeholder="Phone Number" onChange={handleChange} required />
-        <input className="form-input" type="email" name="email" placeholder="Email" onChange={handleChange} required />
-        <input className="form-input" type="password" name="password" placeholder="Password" onChange={handleChange} required />
-        <button className="btn-primary" type="submit">Register</button>
+        <input className="form-input" type="text" name="name" placeholder={t.fullName} onChange={handleChange} required />
+        <input className="form-input" type="text" name="specialization" placeholder={t.specialization} onChange={handleChange} required />
+        <input className="form-input" type="number" name="experience" placeholder={t.yearsExperience} onChange={handleChange} required />
+        <input className="form-input" type="text" name="phone" placeholder={t.phoneNumber} onChange={handleChange} required />
+        <input className="form-input" type="email" name="email" placeholder={t.email} onChange={handleChange} required />
+        <input className="form-input" type="password" name="password" placeholder={t.password} onChange={handleChange} required />
+        <button className="btn-primary" type="submit">{t.register}</button>
       </form>
       {message && <p className="status-message">{message}</p>}
     </div>

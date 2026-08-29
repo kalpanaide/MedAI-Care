@@ -9,6 +9,7 @@ function CreatePrescription({ doctorId }) {
     notes: ''
   });
   const [qrCode, setQrCode] = useState('');
+  const [prescriptionId, setPrescriptionId] = useState('');
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -31,6 +32,7 @@ function CreatePrescription({ doctorId }) {
         notes: formData.notes
       });
       setQrCode(response.data.qrCode);
+      setPrescriptionId(response.data.prescription._id);
       setMessage('Prescription created successfully!');
     } catch (error) {
       setMessage('Failed to create prescription.');
@@ -73,6 +75,12 @@ function CreatePrescription({ doctorId }) {
             Scan this QR code to verify:
           </p>
           <img src={qrCode} alt="Prescription QR Code" style={{ borderRadius: 'var(--radius)' }} />
+          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '12px' }}>
+            Prescription ID (for manual verification):
+          </p>
+          <p style={{ fontSize: '13px', fontFamily: 'monospace', backgroundColor: 'var(--color-bg)', padding: '8px', borderRadius: '6px' }}>
+            {prescriptionId}
+          </p>
         </div>
       )}
     </div>

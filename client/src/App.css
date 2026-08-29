@@ -55,9 +55,11 @@
 
 .sub-nav {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
   margin: 20px 0;
+  padding: 0 12px;
 }
 
 .card {
@@ -161,4 +163,9 @@
   color: var(--color-text-muted);
   text-align: center;
   font-size: 14px;
+}
+.nav-btn.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
 }

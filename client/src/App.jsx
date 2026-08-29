@@ -4,6 +4,7 @@ import Register from './pages/Register';
 import DoctorRegister from './pages/DoctorRegister';
 import BookAppointment from './pages/BookAppointment';
 import MyAppointments from './pages/MyAppointments';
+import MyPrescriptions from './pages/MyPrescriptions';
 import DoctorDashboard from './pages/DoctorDashboard';
 import SymptomChecker from './pages/SymptomChecker';
 import MedicineReminder from './pages/MedicineReminder';
@@ -12,9 +13,9 @@ import EmergencySOS from './pages/EmergencySOS';
 import MentalHealthCheckIn from './pages/MentalHealthCheckIn';
 import CreatePrescription from './pages/CreatePrescription';
 import VerifyPrescription from './pages/VerifyPrescription';
+import NetworkStatus from './pages/NetworkStatus';
 import translations from './translations';
 import './App.css';
-import NetworkStatus from './pages/NetworkStatus';
 
 function App() {
   const [view, setView] = useState('patientLoginQuick');
@@ -24,9 +25,11 @@ function App() {
   const t = translations[language];
 
   const [loggedInPatientId, setLoggedInPatientId] = useState(null);
+  const [loggedInPatientName, setLoggedInPatientName] = useState('');
   const [loginFormData, setLoginFormData] = useState({ email: '', password: '' });
 
   const [loggedInDoctorId, setLoggedInDoctorId] = useState(null);
+  const [loggedInDoctorName, setLoggedInDoctorName] = useState('');
   const [doctorLoginFormData, setDoctorLoginFormData] = useState({ email: '', password: '' });
 
   const handleLoginChange = (e) => {
@@ -38,6 +41,7 @@ function App() {
     try {
       const response = await axios.post('http://localhost:5000/api/patients/login', loginFormData);
       setLoggedInPatientId(response.data.patient._id);
+      setLoggedInPatientName(response.data.patient.name);
       setMessage('Login successful!');
       setView('bookAppointment');
     } catch (error) {
@@ -54,6 +58,7 @@ function App() {
     try {
       const response = await axios.post('http://localhost:5000/api/doctors/login', doctorLoginFormData);
       setLoggedInDoctorId(response.data.doctor._id);
+      setLoggedInDoctorName(response.data.doctor.name);
       setMessage('Login successful!');
       setView('doctorDashboard');
     } catch (error) {
@@ -62,20 +67,31 @@ function App() {
   };
 
   const patientTabs = (
-    <div className="sub-nav">
-      <button className="nav-btn" onClick={() => setView('bookAppointment')}>{t.bookAppointment}</button>
-      <button className="nav-btn" onClick={() => setView('myAppointments')}>My Appointments</button>
-      <button className="nav-btn" onClick={() => setView('medicineReminder')}>{t.medicineReminders}</button>
-      <button className="nav-btn" onClick={() => setView('healthRecords')}>{t.healthRecords}</button>
-      <button className="nav-btn" onClick={() => setView('emergencySOS')}>{t.emergencySOS}</button>
-      <button className="nav-btn" onClick={() => setView('mentalHealth')}>{t.mentalHealth}</button>
+    <div>
+      <p style={{ textAlign: 'center', fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '14px' }}>
+        Logged in as <strong style={{ color: 'var(--color-primary)' }}>{loggedInPatientName}</strong>
+      </p>
+      <div className="sub-nav">
+        <button className={`nav-btn ${view === 'bookAppointment' ? 'active' : ''}`} onClick={() => setView('bookAppointment')}>{t.bookAppointment}</button>
+        <button className={`nav-btn ${view === 'myAppointments' ? 'active' : ''}`} onClick={() => setView('myAppointments')}>{t.myAppointmentsPatient}</button>
+        <button className={`nav-btn ${view === 'myPrescriptions' ? 'active' : ''}`} onClick={() => setView('myPrescriptions')}>My Prescriptions</button>
+        <button className={`nav-btn ${view === 'medicineReminder' ? 'active' : ''}`} onClick={() => setView('medicineReminder')}>{t.medicineReminders}</button>
+        <button className={`nav-btn ${view === 'healthRecords' ? 'active' : ''}`} onClick={() => setView('healthRecords')}>{t.healthRecords}</button>
+        <button className={`nav-btn ${view === 'emergencySOS' ? 'active' : ''}`} onClick={() => setView('emergencySOS')}>{t.emergencySOS}</button>
+        <button className={`nav-btn ${view === 'mentalHealth' ? 'active' : ''}`} onClick={() => setView('mentalHealth')}>{t.mentalHealth}</button>
+      </div>
     </div>
   );
 
   const doctorTabs = (
-    <div className="sub-nav">
-      <button className="nav-btn" onClick={() => setView('doctorDashboard')}>{t.myAppointments}</button>
-      <button className="nav-btn" onClick={() => setView('createPrescription')}>{t.createPrescription}</button>
+    <div>
+      <p style={{ textAlign: 'center', fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '14px' }}>
+        Logged in as <strong style={{ color: 'var(--color-primary)' }}>Dr. {loggedInDoctorName}</strong>
+      </p>
+      <div className="sub-nav">
+        <button className={`nav-btn ${view === 'doctorDashboard' ? 'active' : ''}`} onClick={() => setView('doctorDashboard')}>{t.myAppointments}</button>
+        <button className={`nav-btn ${view === 'createPrescription' ? 'active' : ''}`} onClick={() => setView('createPrescription')}>{t.createPrescription}</button>
+      </div>
     </div>
   );
 
@@ -91,17 +107,17 @@ function App() {
         <div className="app-title">{t.welcome}</div>
 
         <div className="nav-bar">
-          <button className="nav-btn" onClick={() => setView('patientRegister')}>{t.patientRegister}</button>
-          <button className="nav-btn" onClick={() => setView('patientLoginQuick')}>{t.patientLogin}</button>
-          <button className="nav-btn" onClick={() => setView('doctorRegister')}>{t.doctorRegister}</button>
-          <button className="nav-btn" onClick={() => setView('doctorLoginQuick')}>{t.doctorLogin}</button>
-          <button className="nav-btn" onClick={() => setView('symptomChecker')}>{t.symptomChecker}</button>
-          <button className="nav-btn" onClick={() => setView('verifyPrescription')}>{t.verifyPrescription}</button>
+          <button className={`nav-btn ${view === 'patientRegister' ? 'active' : ''}`} onClick={() => setView('patientRegister')}>{t.patientRegister}</button>
+          <button className={`nav-btn ${view === 'patientLoginQuick' ? 'active' : ''}`} onClick={() => setView('patientLoginQuick')}>{t.patientLogin}</button>
+          <button className={`nav-btn ${view === 'doctorRegister' ? 'active' : ''}`} onClick={() => setView('doctorRegister')}>{t.doctorRegister}</button>
+          <button className={`nav-btn ${view === 'doctorLoginQuick' ? 'active' : ''}`} onClick={() => setView('doctorLoginQuick')}>{t.doctorLogin}</button>
+          <button className={`nav-btn ${view === 'symptomChecker' ? 'active' : ''}`} onClick={() => setView('symptomChecker')}>{t.symptomChecker}</button>
+          <button className={`nav-btn ${view === 'verifyPrescription' ? 'active' : ''}`} onClick={() => setView('verifyPrescription')}>{t.verifyPrescription}</button>
         </div>
       </div>
 
-      {view === 'patientRegister' && <Register />}
-      {view === 'doctorRegister' && <DoctorRegister />}
+      {view === 'patientRegister' && <Register language={language} />}
+      {view === 'doctorRegister' && <DoctorRegister language={language} />}
 
       {view === 'patientLoginQuick' && (
         <div className="card">
@@ -141,6 +157,13 @@ function App() {
         </div>
       )}
 
+      {view === 'myPrescriptions' && loggedInPatientId && (
+        <div>
+          {patientTabs}
+          <MyPrescriptions patientId={loggedInPatientId} />
+        </div>
+      )}
+
       {view === 'medicineReminder' && loggedInPatientId && (
         <div>
           {patientTabs}
@@ -169,9 +192,9 @@ function App() {
         </div>
       )}
 
-      {view === 'symptomChecker' && <SymptomChecker />}
+      {view === 'symptomChecker' && <SymptomChecker language={language} />}
 
-      {view === 'verifyPrescription' && <VerifyPrescription />}
+      {view === 'verifyPrescription' && <VerifyPrescription language={language} />}
 
       {view === 'doctorDashboard' && loggedInDoctorId && (
         <div>
