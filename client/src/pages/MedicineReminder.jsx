@@ -10,11 +10,25 @@ function MedicineReminder({ patientId }) {
     frequency: 'Once a day'
   });
   const [message, setMessage] = useState('');
+  const [isOffline, setIsOffline] = useState(false);
+
+  const cacheKey = `medicines_${patientId}`;
 
   const fetchMedicines = () => {
     axios.get(`http://localhost:5000/api/medicines/patient/${patientId}`)
-      .then((response) => setMedicines(response.data))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        setMedicines(response.data);
+        setIsOffline(false);
+        localStorage.setItem(cacheKey, JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+        const cached = localStorage.getItem(cacheKey);
+        if (cached) {
+          setMedicines(JSON.parse(cached));
+          setIsOffline(true);
+        }
+      });
   };
 
   useEffect(() => {
@@ -36,7 +50,7 @@ function MedicineReminder({ patientId }) {
       setFormData({ medicineName: '', dosage: '', time: '', frequency: 'Once a day' });
       fetchMedicines();
     } catch (error) {
-      setMessage('Failed to add reminder.');
+      setMessage('Failed to add reminder. You may be offline.');
       console.log(error);
     }
   };
@@ -54,6 +68,12 @@ function MedicineReminder({ patientId }) {
     <div className="card">
       <h2>Medicine Reminders</h2>
       <p className="card-subtitle">Never miss a dose</p>
+
+      {isOffline && (
+        <p style={{ fontSize: '13px', color: 'var(--color-accent)', marginBottom: '14px' }}>
+          Showing saved data. Connect to the internet to add or update reminders.
+        </p>
+      )}
 
       <form onSubmit={handleSubmit}>
         <input
@@ -88,7 +108,7 @@ function MedicineReminder({ patientId }) {
           <option value="Thrice a day">Thrice a day</option>
           <option value="As needed">As needed</option>
         </select>
-        <button className="btn-primary" type="submit">Add Reminder</button>
+        <button className="btn-primary" type="submit" disabled={isOffline}>Add Reminder</button>
       </form>
 
       {message && <p className="status-message">{message}</p>}
@@ -101,7 +121,7 @@ function MedicineReminder({ patientId }) {
           <p style={{ margin: '0 0 8px 0', color: 'var(--color-text-muted)', fontSize: '14px' }}>
             {med.time} | {med.frequency}
           </p>
-          <button className="btn-delete" onClick={() => handleDelete(med._id)}>Delete</button>
+          <button className="btn-delete" onClick={() => handleDelete(med._id)} disabled={isOffline}>Delete</button>
         </div>
       ))}
     </div>

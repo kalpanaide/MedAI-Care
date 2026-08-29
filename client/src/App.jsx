@@ -14,6 +14,7 @@ import CreatePrescription from './pages/CreatePrescription';
 import VerifyPrescription from './pages/VerifyPrescription';
 import translations from './translations';
 import './App.css';
+import NetworkStatus from './pages/NetworkStatus';
 
 function App() {
   const [view, setView] = useState('patientLoginQuick');
@@ -80,6 +81,7 @@ function App() {
 
   return (
     <div>
+      <NetworkStatus />
       <div className="app-header">
         <div className="lang-toggle">
           <button className={language === 'en' ? 'active' : ''} onClick={() => setLanguage('en')}>English</button>
