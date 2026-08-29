@@ -3,6 +3,7 @@ import axios from 'axios';
 import Register from './pages/Register';
 import DoctorRegister from './pages/DoctorRegister';
 import BookAppointment from './pages/BookAppointment';
+import MyAppointments from './pages/MyAppointments';
 import DoctorDashboard from './pages/DoctorDashboard';
 import SymptomChecker from './pages/SymptomChecker';
 import MedicineReminder from './pages/MedicineReminder';
@@ -62,6 +63,7 @@ function App() {
   const patientTabs = (
     <div className="sub-nav">
       <button className="nav-btn" onClick={() => setView('bookAppointment')}>{t.bookAppointment}</button>
+      <button className="nav-btn" onClick={() => setView('myAppointments')}>My Appointments</button>
       <button className="nav-btn" onClick={() => setView('medicineReminder')}>{t.medicineReminders}</button>
       <button className="nav-btn" onClick={() => setView('healthRecords')}>{t.healthRecords}</button>
       <button className="nav-btn" onClick={() => setView('emergencySOS')}>{t.emergencySOS}</button>
@@ -127,6 +129,13 @@ function App() {
         <div>
           {patientTabs}
           <BookAppointment patientId={loggedInPatientId} />
+        </div>
+      )}
+
+      {view === 'myAppointments' && loggedInPatientId && (
+        <div>
+          {patientTabs}
+          <MyAppointments patientId={loggedInPatientId} />
         </div>
       )}
 
