@@ -18,6 +18,7 @@ router.post('/create', async (req, res) => {
     await newPrescription.save();
 
     const qrData = `https://med-ai-care-roan.vercel.app/?prescriptionId=${newPrescription._id}`;
+    const qrCodeImage = await QRCode.toDataURL(qrData);
 
     res.status(201).json({
       message: 'Prescription created',
