@@ -14,6 +14,8 @@ import MentalHealthCheckIn from './pages/MentalHealthCheckIn';
 import CreatePrescription from './pages/CreatePrescription';
 import VerifyPrescription from './pages/VerifyPrescription';
 import NetworkStatus from './pages/NetworkStatus';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import translations from './translations';
 import './App.css';
 
@@ -22,6 +24,7 @@ function App() {
   const [message, setMessage] = useState('');
   const [language, setLanguage] = useState('en');
   const [scannedPrescriptionId, setScannedPrescriptionId] = useState('');
+  const [resetToken, setResetToken] = useState('');
 
   const t = translations[language];
 
@@ -36,9 +39,14 @@ function App() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const idFromUrl = params.get('prescriptionId');
+    const tokenFromUrl = params.get('resetToken');
     if (idFromUrl) {
       setScannedPrescriptionId(idFromUrl);
       setView('verifyPrescription');
+    }
+    if (tokenFromUrl) {
+      setResetToken(tokenFromUrl);
+      setView('resetPassword');
     }
   }, []);
 
@@ -137,6 +145,11 @@ function App() {
             <input className="form-input" type="password" name="password" placeholder={t.password} onChange={handleLoginChange} required />
             <button className="btn-primary" type="submit">{t.login}</button>
           </form>
+          <p style={{ textAlign: 'center', fontSize: '13px', marginTop: '10px' }}>
+            <span style={{ color: 'var(--color-primary)', cursor: 'pointer' }} onClick={() => setView('forgotPassword')}>
+              Forgot Password?
+            </span>
+          </p>
           {message && <p className="status-message">{message}</p>}
         </div>
       )}
@@ -152,6 +165,10 @@ function App() {
           {message && <p className="status-message">{message}</p>}
         </div>
       )}
+
+      {view === 'forgotPassword' && <ForgotPassword />}
+
+      {view === 'resetPassword' && <ResetPassword token={resetToken} />}
 
       {view === 'bookAppointment' && loggedInPatientId && (
         <div>
