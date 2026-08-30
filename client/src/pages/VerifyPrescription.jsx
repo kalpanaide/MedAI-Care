@@ -1,25 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import translations from '../translations';
 
-function VerifyPrescription({ language = 'en' }) {
+function VerifyPrescription({ language = 'en', initialId = '' }) {
   const t = translations[language];
 
-  const [prescriptionId, setPrescriptionId] = useState('');
+  const [prescriptionId, setPrescriptionId] = useState(initialId);
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
 
-  const handleVerify = async () => {
+  const handleVerify = async (idToCheck) => {
     setError('');
     setResult(null);
     try {
-      const response = await axios.get(`https://medai-care-backend.onrender.com/api/prescriptions/verify/${prescriptionId}`);
+      const response = await axios.get(`https://medai-care-backend.onrender.com/api/prescriptions/verify/${idToCheck}`);
       setResult(response.data.prescription);
     } catch (error) {
       setError(t.notFoundError);
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (initialId) {
+      handleVerify(initialId);
+    }
+  }, [initialId]);
 
   return (
     <div className="card">
@@ -33,7 +39,7 @@ function VerifyPrescription({ language = 'en' }) {
         value={prescriptionId}
         onChange={(e) => setPrescriptionId(e.target.value)}
       />
-      <button className="btn-primary" onClick={handleVerify}>{t.verify}</button>
+      <button className="btn-primary" onClick={() => handleVerify(prescriptionId)}>{t.verify}</button>
 
       {error && <p className="status-message" style={{ color: 'var(--color-accent)' }}>{error}</p>}
 

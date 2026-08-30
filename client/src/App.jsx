@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Register from './pages/Register';
 import DoctorRegister from './pages/DoctorRegister';
@@ -21,6 +21,7 @@ function App() {
   const [view, setView] = useState('patientLoginQuick');
   const [message, setMessage] = useState('');
   const [language, setLanguage] = useState('en');
+  const [scannedPrescriptionId, setScannedPrescriptionId] = useState('');
 
   const t = translations[language];
 
@@ -31,6 +32,15 @@ function App() {
   const [loggedInDoctorId, setLoggedInDoctorId] = useState(null);
   const [loggedInDoctorName, setLoggedInDoctorName] = useState('');
   const [doctorLoginFormData, setDoctorLoginFormData] = useState({ email: '', password: '' });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const idFromUrl = params.get('prescriptionId');
+    if (idFromUrl) {
+      setScannedPrescriptionId(idFromUrl);
+      setView('verifyPrescription');
+    }
+  }, []);
 
   const handleLoginChange = (e) => {
     setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
@@ -194,7 +204,7 @@ function App() {
 
       {view === 'symptomChecker' && <SymptomChecker language={language} />}
 
-      {view === 'verifyPrescription' && <VerifyPrescription language={language} />}
+      {view === 'verifyPrescription' && <VerifyPrescription language={language} initialId={scannedPrescriptionId} />}
 
       {view === 'doctorDashboard' && loggedInDoctorId && (
         <div>
