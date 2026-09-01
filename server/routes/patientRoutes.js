@@ -69,7 +69,7 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetLink = `https://med-ai-care-roan.vercel.app/?resetToken=${token}`;
 
-    await resend.emails.send({
+    const emailResult = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: patient.email,
       subject: 'MedAI Care - Password Reset',
@@ -77,6 +77,10 @@ router.post('/forgot-password', async (req, res) => {
              <p>Click the link below to reset your password. This link expires in 1 hour.</p>
              <a href="${resetLink}">${resetLink}</a>`
     });
+
+    if (emailResult.error) {
+      return res.status(500).json({ message: 'Email failed to send', error: emailResult.error.message });
+    }
 
     res.status(200).json({ message: 'Reset link sent to your email' });
 
