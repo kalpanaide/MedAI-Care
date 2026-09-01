@@ -3,7 +3,7 @@ const router = express.Router();
 const Patient = require('../models/Patient');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
-const transporter = require('../emailConfig');
+const resend = require('../emailConfig');
 
 // Registration route
 router.post('/register', async (req, res) => {
@@ -24,12 +24,10 @@ router.post('/register', async (req, res) => {
     await newPatient.save();
     res.status(201).json({ message: 'Patient registered', patient: newPatient });
 
-    } catch (error) {
+  } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 });
-
-// Reset password using token
 
 // Login route
 router.post('/login', async (req, res) => {
@@ -71,8 +69,8 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetLink = `https://med-ai-care-roan.vercel.app/?resetToken=${token}`;
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+    await resend.emails.send({
+      from: 'onboarding@resend.dev',
       to: patient.email,
       subject: 'MedAI Care - Password Reset',
       html: `<p>Hi ${patient.name},</p>
