@@ -24,10 +24,12 @@ router.post('/register', async (req, res) => {
     await newPatient.save();
     res.status(201).json({ message: 'Patient registered', patient: newPatient });
 
-  } catch (error) {
+    } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 });
+
+// Reset password using token
 
 // Login route
 router.post('/login', async (req, res) => {
