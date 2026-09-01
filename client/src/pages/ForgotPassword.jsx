@@ -14,9 +14,7 @@ function ForgotPassword() {
       const response = await axios.post('https://medai-care-backend.onrender.com/api/patients/forgot-password', { email });
       setMessage(response.data.message);
     } catch (error) {
-      const backendError = error.response?.data?.error || error.response?.data?.message || error.message;
-      setMessage('Error: ' + backendError);
-      console.log('Full error:', error.response?.data);
+      setMessage(error.response?.data?.message || 'Something went wrong. Please try again.');
     }
     setLoading(false);
   };

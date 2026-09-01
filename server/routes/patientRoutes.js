@@ -78,8 +78,8 @@ router.post('/forgot-password', async (req, res) => {
              <a href="${resetLink}">${resetLink}</a>`
     });
 
-    if (emailResult.error) {
-      return res.status(500).json({ message: 'Email failed to send', error: emailResult.error.message });
+      if (emailResult.error) {
+      return res.status(500).json({ message: 'Unable to send reset email at this time. Please try again later.' });
     }
 
     res.status(200).json({ message: 'Reset link sent to your email' });
