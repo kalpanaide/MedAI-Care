@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Patient ka schema - yani ek patient ka data kaisa dikhega
 const patientSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -27,9 +26,14 @@ const patientSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  resetToken: {
+    type: String
+  },
+  resetTokenExpiry: {
+    type: Date
   }
 }, { timestamps: true });
-// timestamps: true -> ye automatically record karega ki patient kab register hua
 
 const Patient = mongoose.model('Patient', patientSchema);
 
