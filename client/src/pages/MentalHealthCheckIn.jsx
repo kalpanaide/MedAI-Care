@@ -8,13 +8,25 @@ function MentalHealthCheckIn() {
   const [voiceEnabled, setVoiceEnabled] = useState(true);
 
   const speak = (text) => {
-    if (!voiceEnabled || !window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.95;
-    utterance.pitch = 1.05;
-    window.speechSynthesis.speak(utterance);
-  };
+  if (!voiceEnabled || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 0.92;
+  utterance.pitch = 1.1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const preferredVoice =
+    voices.find(v => v.name.includes('Google US English')) ||
+    voices.find(v => v.name.toLowerCase().includes('zira')) ||
+    voices.find(v => v.name.toLowerCase().includes('female') && v.lang.startsWith('en')) ||
+    voices.find(v => v.name.toLowerCase().includes('samantha')) ||
+    voices.find(v => v.lang === 'en-US') ||
+    voices[0];
+
+  if (preferredVoice) utterance.voice = preferredVoice;
+
+  window.speechSynthesis.speak(utterance);
+};
 
   const handleSend = async () => {
     if (!message.trim()) return;
